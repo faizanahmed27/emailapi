@@ -23,6 +23,8 @@ public class EmailService {
 		simpleMailMessage.setText(message);
 		simpleMailMessage.setTo(to);
 		
+		System.out.println("Send mail : " +simpleMailMessage);
+		
 		mailSender.send(simpleMailMessage);
 	}
 }
