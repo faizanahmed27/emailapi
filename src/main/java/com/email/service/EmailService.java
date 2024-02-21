@@ -15,16 +15,28 @@ public class EmailService {
 	@Value("${spring.mail.username}")
 	private String mailFrom;
 	
-	public void sendMail(String to, String message, String subject) {
+	public boolean sendMail(String to, String subject, String message) {
 		
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setFrom(mailFrom);
-		simpleMailMessage.setSubject(subject);
-		simpleMailMessage.setText(message);
-		simpleMailMessage.setTo(to);
-		
-		System.out.println("Send mail : " +simpleMailMessage);
-		
-		mailSender.send(simpleMailMessage);
+		try {
+			
+			SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+			simpleMailMessage.setFrom(mailFrom);
+			simpleMailMessage.setSubject(subject);
+			simpleMailMessage.setText(message);
+			simpleMailMessage.setTo(to);
+			
+			mailSender.send(simpleMailMessage);
+			
+			String success = "SENT";
+			if(success.equalsIgnoreCase("SENT")) {
+				return true;
+			}else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
