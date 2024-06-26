@@ -14,6 +14,8 @@ import com.email.model.EmailRequest;
 import com.email.model.EmailResponse;
 import com.email.service.EmailService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
@@ -22,13 +24,16 @@ public class EmailController {
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private HttpSession session;
+	
 	 Logger logger = LoggerFactory.getLogger(EmailController.class);
 
 	@PostMapping("/sendMail")
 	public ResponseEntity<?> sendMail(@RequestBody EmailRequest emailRequest){
 		
 		logger.info("Inside sendMail API");
-		
+		//String sessionId = session.getId();
 		boolean result = emailService.sendMail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getMessage());
 		if(result==true) {
 			logger.info("Mail Sent Successfully...");
